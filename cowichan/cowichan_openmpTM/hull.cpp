@@ -16,8 +16,7 @@ namespace cowichan_openmp
  * \param pointsOut output points.
  * \param hn number of output points generated so far.
  */
-void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut,
-    index_t* hn);
+void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn);
 
 /**
  * Recursive step of the quickhull algorithm - compute hull on one side of the
@@ -80,9 +79,7 @@ void CowichanOpenMP::hull (PointVector pointsIn, PointVector pointsOut)
 namespace cowichan_openmp
 {
 
-void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut,
-    index_t* hn)
-{
+void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn) {
   // base case
   if (n == 1) {
     pointsOut[(*hn)++] = pointsIn[0];
@@ -95,51 +92,26 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut,
   // checking cutoff value here prevents allocating unnecessary memory
   // for the reduction
   if(n > CowichanOpenMP::HULL_CUTOFF) { //if(n > CowichanOpenMP::HULL_CUTOFF) {
-    index_t num_threads = omp_get_max_threads();
-
-    Point** minPoints = NULL;
-    Point** maxPoints = NULL;
-
-    try {
-      minPoints = NEW_VECTOR_SZ(Point*, num_threads);
-      maxPoints = NEW_VECTOR_SZ(Point*, num_threads);
-    }
-    catch (...) {out_of_memory();}
+    minPoint = &pointsIn[0];
+    maxPoint = &pointsIn[0];
 
     // figure out the points with minimum and maximum x values
   #pragma omp parallel
     {
-      index_t thread_num = omp_get_thread_num();
-      minPoints[thread_num] = &pointsIn[0];
-      maxPoints[thread_num] = &pointsIn[0];
-      index_t i;
+
   #pragma omp for schedule(static)
-      for (i = 1; i < n; i++) {
-        if (minPoints[thread_num]->x > pointsIn[i].x) {
-          minPoints[thread_num] = &pointsIn[i];
-        }
-        if (maxPoints[thread_num]->x < pointsIn[i].x) {
-          maxPoints[thread_num] = &pointsIn[i];
-        }
-      }
-    }
-
-    minPoint = minPoints[0];
-    maxPoint = maxPoints[0];
-
-    for (index_t i = 1; i < num_threads; i++) {
-      if (minPoint->x > minPoints[i]->x) {
-        minPoint = minPoints[i];
-      }
-      if (maxPoint->x < maxPoints[i]->x) {
-        maxPoint = maxPoints[i];
-      }
-    }
-
-    delete [] minPoints;
-    delete [] maxPoints;
+      for (index_t i = 1; i < n; i++) {
+		__transaction_atomic {	
+			if (minPoint->x > pointsIn[i].x) {
+			minPoint = &pointsIn[i];
+			}
+			if (maxPoint->x < pointsIn[i].x) {
+			maxPoint = &pointsIn[i];
+			}
+		}
+	}
   }
-  else {
+  } else {
     minPoint = &pointsIn[0];
     maxPoint = &pointsIn[0];
 
@@ -163,54 +135,30 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut,
 void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
     Point* p1, Point* p2) {
 
-  Point* maxPoint;
-  real maxCross;
+	Point* maxPoint;
+	real maxCross;
 
   // checking cutoff value here prevents allocating unnecessary memory
   // for the reduction
   if (n > CowichanOpenMP::HULL_CUTOFF) {
-    index_t num_threads = omp_get_max_threads();
-
-    Point** maxPoints = NULL;
-    Vector maxCrosses = NULL;
-
-    try {
-      maxPoints = NEW_VECTOR_SZ(Point*, num_threads);
-      maxCrosses = NEW_VECTOR_SZ(real, num_threads);
-    }
-    catch (...) {out_of_memory();}
 
     // compute the signed distances from the line for each point
 #pragma omp parallel
     {
-      index_t thread_num = omp_get_thread_num();
-      maxPoints[thread_num] = &pointsIn[0];
-      maxCrosses[thread_num] = Point::cross (*p1, *p2, pointsIn[0]);
+		maxPoint = &pointsIn[0];
+		maxCross = Point::cross (*p1, *p2, pointsIn[0]);
 #pragma omp for schedule(static)
       for (index_t i = 1; i < n; i++) {
+		__transaction_atomic {
         real currentCross = Point::cross (*p1, *p2, pointsIn[i]);
-        if (currentCross > maxCrosses[thread_num]) {
-          maxPoints[thread_num] = &pointsIn[i];
-          maxCrosses[thread_num] = currentCross;
+        if (currentCross > maxCross) {
+          maxPoint = &pointsIn[i];
+          maxCross = currentCross;
         }
       }
-    }
-
-    maxPoint = maxPoints[0];
-    maxCross = maxCrosses[0];
-
-    for (index_t i = 0; i < num_threads; i++) {
-      if (maxCross < maxCrosses[i]) {
-        maxPoint = maxPoints[i];
-        maxCross = maxCrosses[i];
-      }
-    }
-
-    delete [] maxPoints;
-    delete [] maxCrosses;
   }
-  else
-  {
+  }
+  }else{
     maxPoint = &pointsIn[0];
     maxCross = Point::cross (*p1, *p2, pointsIn[0]);
 

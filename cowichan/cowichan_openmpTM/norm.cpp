@@ -42,7 +42,6 @@ void CowichanOpenMP::norm (PointVector pointsIn, PointVector pointsOut)
     pointsOut[i].x = sclX * (pointsIn[i].x - minPoint.x);
     pointsOut[i].y = sclY * (pointsIn[i].y - minPoint.y);
   }
-
 }
 
 /*****************************************************************************/
@@ -58,11 +57,9 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
  maxPoint->y = points[0].y;
 
  #pragma omp parallel
- #pragma omp for schedule(static)
-  {
-	 __transaction_atomic {
-		
+ #pragma omp for schedule(static)	
 		 for (index_t i = 0; i < n; i++) {
+			__transaction_atomic {	
 			if (minPoint->x > points[i].x) {
 			  minPoint->x = points[i].x;
 			}
@@ -77,9 +74,21 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
 			}
 		  }
 	  }
-	}
 
 }
 
 }
+/*
+int main (){
+	CowichanOpenMP oi;
+	Point a(1,2), b(2,3), c(3,4), d(4,5);
+	PointVector in,out;
+	in[0] = a;
+	in[1] = b;
+	in[2] = c;
+	in[3] = d;
+	
+	oi.norm(in,out);
+	return 0;
+}*/
 
