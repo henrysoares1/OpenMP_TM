@@ -57,38 +57,37 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
  maxPoint->y = points[0].y;
 
  #pragma omp parallel
+ {
+	 //index_t thread_num = omp_get_thread_num();
  #pragma omp for schedule(static)	
 		 for (index_t i = 0; i < n; i++) {
 			__transaction_atomic {	
-			if (minPoint->x > points[i].x) {
-			  minPoint->x = points[i].x;
-			}
-			if (minPoint->y > points[i].y) {
-			  minPoint->y = points[i].y;
-			}
-			if (maxPoint->x < points[i].y) {
-			  maxPoint->x = points[i].x;
-			}
-			if (maxPoint->y < points[i].y) {
-			  maxPoint->y = points[i].y;
-			}
-		  }
+				if (minPoint->x > points[i].x) {
+				  minPoint->x = points[i].x;
+				}
+			//}
+			//__transaction_atomic {			
+				if (minPoint->y > points[i].y) {
+				  minPoint->y = points[i].y;
+				}
+			//}
+			//__transaction_atomic {
+				if (maxPoint->x < points[i].x) {
+				  maxPoint->x = points[i].x;
+				}
+			//}
+			//__transaction_atomic {
+				if (maxPoint->y < points[i].y) {
+				  maxPoint->y = points[i].y;
+				}
+			//}
 	  }
-
+	  //printf("thread:%ld maxPoint:%lf\n", thread_num, maxPoint->x);
+	}
+  }
+printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);
 }
 
 }
-/*
-int main (){
-	CowichanOpenMP oi;
-	Point a(1,2), b(2,3), c(3,4), d(4,5);
-	PointVector in,out;
-	in[0] = a;
-	in[1] = b;
-	in[2] = c;
-	in[3] = d;
-	
-	oi.norm(in,out);
-	return 0;
-}*/
+
 

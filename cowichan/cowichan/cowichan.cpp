@@ -5,6 +5,7 @@
  */
 
 #include "cowichan.hpp"
+#include <iostream>
 
 real uniform(real mean, real range) {
   return (rand() / (real)RAND_MAX) * (2.0f * range) - range + mean;
@@ -27,7 +28,7 @@ void no_cells_alive() {
   exit(1);
 }
 
-#ifdef OUTPUT_DATA
+
 void Cowichan::print_vector(PointVector points)
 {
   index_t r;
@@ -37,9 +38,8 @@ void Cowichan::print_vector(PointVector points)
   }
   std::cout << std::endl;
 }
-#else
-void Cowichan::print_vector(PointVector /* points */) { }
-#endif
+
+
 
 #ifdef OUTPUT_DATA
   void Cowichan::print_bool_rect_matrix(BoolMatrix matrix)
@@ -394,8 +394,8 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       norm (pointsIn, pointsOut);
       printf("%s\n", "Fim");
       
-      timeInfo(&start, &end, NORM);
       print_vector(pointsOut);
+      timeInfo(&start, &end, NORM);
 
       // clean up
       delete [] pointsIn;
@@ -426,8 +426,8 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       hull (pointsIn, pointsOut);
-      timeInfo(&start, &end, HULL);
       print_vector(pointsOut);
+      timeInfo(&start, &end, HULL);
 
       // clean up
       delete [] pointsIn;
@@ -555,8 +555,9 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       sor (matrix, target, solution);
-      timeInfo(&start, &end, SOR);
+   
       print_vector<real> (solution);
+      timeInfo(&start, &end, SOR);
 
       // clean up
       delete [] matrix;
@@ -776,6 +777,7 @@ void Cowichan::chain(bool use_randmat, bool use_thresh)
 
   // execute
   end = get_ticks ();
+   printf("n:%ld", n); 
   winnow (matrix2, mask2, vector1);
   timeInfo(&start, &end, WINNOW);
   print_vector(vector1);
@@ -797,8 +799,9 @@ void Cowichan::chain(bool use_randmat, bool use_thresh)
   // execute
   end = get_ticks ();
   norm (vector1, vector2);
-  timeInfo(&start, &end, NORM);
   print_vector(vector2);
+  timeInfo(&start, &end, NORM);
+ 
 
   // STEP 7: hull
 

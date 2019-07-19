@@ -14,11 +14,12 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
   maxDiff = (real)fabs((double)(actual[0] - computed[0]));
 
 
-#pragma omp parallel private(diff, maxDiff)
+#pragma omp parallel private(diff)
   {
+	 //index_t thread_num = omp_get_thread_num();
 	#pragma omp for schedule(static)
 		for (i = 1; i < n; i++) {
-			__transaction_atomic {
+			__transaction_atomic {  
 			diff = (real)fabs((double)(actual[i] - computed[i]));
 			if (maxDiff < diff) {
 				maxDiff = diff;
@@ -26,6 +27,7 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
 			}
 		}
   }
+  printf("maxDiff =%f \n", maxDiff);
   return maxDiff;
 }
 

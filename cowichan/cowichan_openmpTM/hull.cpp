@@ -103,14 +103,14 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* 
       for (index_t i = 1; i < n; i++) {
 		__transaction_atomic {	
 			if (minPoint->x > pointsIn[i].x) {
-			minPoint = &pointsIn[i];
-			}
-			if (maxPoint->x < pointsIn[i].x) {
-			maxPoint = &pointsIn[i];
+				minPoint = &pointsIn[i];
+				}
+				if (maxPoint->x < pointsIn[i].x) {
+					maxPoint = &pointsIn[i];
+				}
 			}
 		}
 	}
-  }
   } else {
     minPoint = &pointsIn[0];
     maxPoint = &pointsIn[0];
@@ -143,20 +143,20 @@ void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
   if (n > CowichanOpenMP::HULL_CUTOFF) {
 
     // compute the signed distances from the line for each point
+maxPoint = &pointsIn[0];
+maxCross = Point::cross (*p1, *p2, pointsIn[0]);
 #pragma omp parallel
     {
-		maxPoint = &pointsIn[0];
-		maxCross = Point::cross (*p1, *p2, pointsIn[0]);
 #pragma omp for schedule(static)
       for (index_t i = 1; i < n; i++) {
 		__transaction_atomic {
-        real currentCross = Point::cross (*p1, *p2, pointsIn[i]);
-        if (currentCross > maxCross) {
-          maxPoint = &pointsIn[i];
-          maxCross = currentCross;
-        }
-      }
-  }
+			real currentCross = Point::cross (*p1, *p2, pointsIn[i]);
+			if (currentCross > maxCross) {
+			  maxPoint = &pointsIn[i];
+			  maxCross = currentCross;
+			}
+		}
+	}
   }
   }else{
     maxPoint = &pointsIn[0];
@@ -171,7 +171,6 @@ void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
       }
     }
   }
-
   // is there a point in the positive half-space?
   // if so, it has maximal distance, and we must recurse based on that point.
   if (maxCross > 0.0) {

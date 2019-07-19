@@ -5,6 +5,7 @@
  */
 
 #include "cowichan_openmp.hpp"
+#include <iostream>
 
 namespace cowichan_openmp
 {
@@ -46,6 +47,9 @@ void split(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
  * the end of pointsIn vector.
  * NOTE: pointsIn vector gets modified by the algorithm.
  */
+ 
+
+
 void CowichanOpenMP::hull (PointVector pointsIn, PointVector pointsOut)
 {
   index_t hn = 0;

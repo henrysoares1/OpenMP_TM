@@ -72,9 +72,6 @@ void findMinMax(PointVector points, index_t n, Point* minPoint,
     maxPoints[thread_num].y = points[0].y;
 #pragma omp for schedule(static)
     for (index_t i = 1; i < n; i++) {
-      
-      //Adicionado FOR para Volume
-      for(index_t j = 1; j < n; j++) {  
       if (points[i].x < minPoints[thread_num].x) {
         minPoints[thread_num].x = points[i].x;
       }
@@ -86,7 +83,6 @@ void findMinMax(PointVector points, index_t n, Point* minPoint,
       }
       if (points[i].y > maxPoints[thread_num].y) {
         maxPoints[thread_num].y = points[i].y;
-      }
       }
     }
   }
@@ -113,7 +109,9 @@ void findMinMax(PointVector points, index_t n, Point* minPoint,
 
   delete [] minPoints;
   delete [] maxPoints;
-
+	
+  printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);
+	
 }
 
 }
