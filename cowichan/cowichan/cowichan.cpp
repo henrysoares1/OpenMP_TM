@@ -41,7 +41,7 @@ void Cowichan::print_vector(PointVector points)
 
 
 
-#ifdef OUTPUT_DATA
+
   void Cowichan::print_bool_rect_matrix(BoolMatrix matrix)
   {
     index_t r, c;
@@ -61,9 +61,7 @@ void Cowichan::print_vector(PointVector points)
     }
     std::cout << std::endl;
   }
-#else
-  void Cowichan::print_bool_rect_matrix(BoolMatrix /* matrix */) { }
-#endif
+
 
 /*****************************************************************************/
 
@@ -285,8 +283,8 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       thresh (matrix, mask);
-      timeInfo(&start, &end, THRESH);
-      print_bool_rect_matrix (mask);
+      //print_bool_rect_matrix (mask);
+	  timeInfo(&start, &end, THRESH);
 
       // clean up
       delete [] matrix;
@@ -358,8 +356,8 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       winnow (matrix, mask, points);
-      timeInfo(&start, &end, WINNOW);
       print_vector(points);
+      timeInfo(&start, &end, WINNOW);
 
       // clean up
       delete [] matrix;
@@ -390,10 +388,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       
       // execute
       end = get_ticks ();
-      printf("%s\n", "Início");
-      norm (pointsIn, pointsOut);
-      printf("%s\n", "Fim");
-      
+      norm (pointsIn, pointsOut);      
       print_vector(pointsOut);
       timeInfo(&start, &end, NORM);
 
@@ -460,10 +455,9 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       outer (points, matrix, vector);
-      timeInfo(&start, &end, OUTER);
-      print_square_matrix<real> (matrix);
+      //print_square_matrix<real> (matrix);
       print_vector<real> (vector);
-
+	  timeInfo(&start, &end, OUTER);
       // clean up
       delete [] points;
       delete [] matrix;

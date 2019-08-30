@@ -486,7 +486,7 @@ typedef WeightedPoint* WeightedPointVector;
  * Access a rectangular matrix at row/col from a class using member variable nc
  * as the number of columns.
  */
-#define MATRIX_RECT(mtrx,row,col)  (mtrx)[(row)*this->nc + col]
+#define  MATRIX_RECT(mtrx,row,col) (mtrx)[(row)*this->nc + col]
 
 /**
  * Access a rectangular matrix at row/col using nc as the number of columns.
@@ -863,7 +863,7 @@ public:
    * DEBUGGING FUNCTION: Print a square matrix on std::cout.
    * \param matrix matrix to print.
    */
-#ifdef OUTPUT_DATA
+
   template <typename T>
   void print_square_matrix(T* matrix)
   {
@@ -877,16 +877,13 @@ public:
     }
     std::cout << std::endl;
   }
-#else
-  template <typename T>
-  void print_square_matrix(T* /* matrix */) { }
-#endif
+
 
   /**
    * DEBUGGING FUNCTION: Print a vector on std::cout.
    * \param vector vector to print.
    */
-#ifdef OUTPUT_DATA
+
   template <typename T>
   void print_vector(T* vector)
   {
@@ -897,10 +894,7 @@ public:
     }
     std::cout << std::endl;
   }
-#else
-  template <typename T>
-  void print_vector(T* /* vector */) { }
-#endif
+
 
   /**
    * DEBUGGING FUNCTION: Print a point vector.
