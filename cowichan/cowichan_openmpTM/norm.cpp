@@ -64,25 +64,17 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
 			__transaction_atomic {	
 				if (minPoint->x > points[i].x) {
 				  minPoint->x = points[i].x;
-				}
-			//}
-			//__transaction_atomic {			
+				}			
 				if (minPoint->y > points[i].y) {
 				  minPoint->y = points[i].y;
 				}
-			//}
-			//__transaction_atomic {
 				if (maxPoint->x < points[i].x) {
 				  maxPoint->x = points[i].x;
 				}
-			//}
-			//__transaction_atomic {
 				if (maxPoint->y < points[i].y) {
 				  maxPoint->y = points[i].y;
 				}
-			//}
 	  }
-	  //printf("thread:%ld maxPoint:%lf\n", thread_num, maxPoint->x);
 	}
   }
 printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);

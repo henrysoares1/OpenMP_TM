@@ -24,11 +24,10 @@ void CowichanOpenMP::sor (Matrix matrix, Vector target, Vector solution)
 	printf("maxDiff: %f \n", maxDiff);
     maxDiff = 0.0;
 
-#pragma omp parallel
+#pragma omp parallel private(oldSolution, diff, sum, c)
     {
 #pragma omp for schedule(static)
       for (r = 0; r < n; r++) {
-		__transaction_atomic {
 			// compute sum
 			sum = 0.0;
 			for (c = 0; c < r; c++) {
@@ -45,11 +44,11 @@ void CowichanOpenMP::sor (Matrix matrix, Vector target, Vector solution)
 
 			// compute difference
 			diff = (real)fabs((double)(oldSolution - solution[r]));
-			if (diff > maxDiff){
-			  maxDiff = diff;
+			__transaction_atomic {
+				if (diff > maxDiff){
+					maxDiff = diff;
+				}
 			}
-		  }
-
 		}
 
 	  }

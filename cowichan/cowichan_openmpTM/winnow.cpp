@@ -28,9 +28,10 @@ void CowichanOpenMP::winnow(IntMatrix matrix, BoolMatrix mask,
   index_t r, c;
   index_t len; // number of points
   index_t stride; // selection stride
-  index_t i;		
+		
   // count set cell in
   len = mask_count (mask, nr, nc);
+  printf("len: %ld \n", len);
   if (len < n) {
     not_enough_points();
   }
@@ -42,21 +43,35 @@ void CowichanOpenMP::winnow(IntMatrix matrix, BoolMatrix mask,
   catch (...) {out_of_memory();}
 
   // fill temporary vector
-  i = 0;
+  index_t i = 0;
+  index_t num_threads = omp_get_max_threads();
+
+  index_t* buckets = NULL;
+
+  try {
+    buckets = NEW_VECTOR_SZ(index_t, num_threads);
+  }
+  catch (...) {out_of_memory();}
+  buckets[0] = 0;
+  buckets[1] = 84387359;
+  buckets[2] = 28128126;
+  buckets[3] = 56259144;
 #pragma omp parallel private(i)
   {
+	index_t thread_num = omp_get_thread_num();
+    i = buckets[thread_num];
+    printf("i: %ld \n", i);
 #pragma omp for schedule(static)
     for (r = 0; r < nr; r++) { 
-	  __transaction_relaxed {
 #pragma omp parallel for schedule(static)
       for (c = 0; c < nc; c++) {
         if (MATRIX_RECT(mask, r, c)) {
           weightedPoints[i++] = WeightedPoint((real)c, (real)r, MATRIX_RECT(matrix, r, c));
-         }
         }
 	  }
     }
   }
+delete [] buckets;
 
 #ifdef SORT_TIME
   INT64 start, end;
@@ -125,10 +140,9 @@ index_t mask_count(BoolMatrix mask, index_t nr, index_t nc) {
 						  }
 					  }
 		}
-		sum2 = sum/2;
+		__transaction_atomic {sum2 += sum;}
 	}
-	
+	printf("sum2: %ld \n", sum2);
 	return sum2;
 }
 }
-

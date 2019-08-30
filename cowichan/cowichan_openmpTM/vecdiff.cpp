@@ -18,9 +18,9 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
   {
 	 //index_t thread_num = omp_get_thread_num();
 	#pragma omp for schedule(static)
-		for (i = 1; i < n; i++) {
-			__transaction_atomic {  
+		for (i = 1; i < n; i++) { 
 			diff = (real)fabs((double)(actual[i] - computed[i]));
+			__transaction_atomic { 
 			if (maxDiff < diff) {
 				maxDiff = diff;
 			  }

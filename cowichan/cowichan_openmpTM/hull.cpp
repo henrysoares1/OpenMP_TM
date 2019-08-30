@@ -105,8 +105,8 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* 
 			if (minPoint->x > pointsIn[i].x) {
 				minPoint = &pointsIn[i];
 				}
-				if (maxPoint->x < pointsIn[i].x) {
-					maxPoint = &pointsIn[i];
+			if (maxPoint->x < pointsIn[i].x) {
+				maxPoint = &pointsIn[i];
 				}
 			}
 		}
@@ -137,6 +137,7 @@ void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
 
 	Point* maxPoint;
 	real maxCross;
+	real currentCross;
 
   // checking cutoff value here prevents allocating unnecessary memory
   // for the reduction
@@ -145,12 +146,12 @@ void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
     // compute the signed distances from the line for each point
 maxPoint = &pointsIn[0];
 maxCross = Point::cross (*p1, *p2, pointsIn[0]);
-#pragma omp parallel
+#pragma omp parallel private(currentCross)
     {
 #pragma omp for schedule(static)
       for (index_t i = 1; i < n; i++) {
-		__transaction_atomic {
-			real currentCross = Point::cross (*p1, *p2, pointsIn[i]);
+			currentCross = Point::cross (*p1, *p2, pointsIn[i]);
+			__transaction_atomic {
 			if (currentCross > maxCross) {
 			  maxPoint = &pointsIn[i];
 			  maxCross = currentCross;

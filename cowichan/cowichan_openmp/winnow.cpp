@@ -50,7 +50,7 @@ void CowichanOpenMP::winnow(IntMatrix matrix, BoolMatrix mask,
     buckets[i] = len;
     len += tmp;
   }
-
+  printf("len: %ld \n", len);
   if (len < n) {
     not_enough_points();
   }
@@ -66,13 +66,13 @@ void CowichanOpenMP::winnow(IntMatrix matrix, BoolMatrix mask,
   {
     index_t thread_num = omp_get_thread_num();
     i = buckets[thread_num];
+    printf("i: %ld \n", i);
 #pragma omp for schedule(static)
     for (r = 0; r < nr; r++) {
 #pragma omp parallel for schedule(static)
       for (c = 0; c < nc; c++) {
         if (MATRIX_RECT(mask, r, c)) {
-          weightedPoints[i++] = WeightedPoint((real)c, (real)r,
-              MATRIX_RECT(matrix, r, c));
+          weightedPoints[i++] = WeightedPoint((real)c, (real)r, MATRIX_RECT(matrix, r, c));
         }
       }
     }

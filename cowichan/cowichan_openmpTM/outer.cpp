@@ -13,23 +13,27 @@ void CowichanOpenMP::outer (PointVector points, Matrix matrix, Vector vector){
   index_t r, c; // loop indices
 
   // all elements except matrix diagonal
-#pragma omp parallel private(dMax, d)
+#pragma omp parallel private(d)
   {
-#pragma omp for schedule(static)
+	  d = 0.0;
+#pragma omp for schedule(guided)
     for (r = 0; r < n; r++) {
-		__transaction_relaxed {
+
       vector[r] = Point::distance (points[r], zeroPoint);
 #pragma omp parallel for schedule(static)
       for (c = 0; c < r; c++) {
         d = Point::distance (points[r], points[c]);
-        if (d > dMax) {
-          dMax = d;
+			__transaction_atomic {
+			if (d > dMax) {
+			dMax = d;
+			}
         }
         MATRIX_SQUARE(matrix, r, c) = MATRIX_SQUARE(matrix, c, r) = d;
       }
-    }
+    
 	}
   }
+  printf("dMax: %f \n", dMax);
   // matrix diagonal
   dMax *= n;
 #pragma omp parallel for schedule(static)
