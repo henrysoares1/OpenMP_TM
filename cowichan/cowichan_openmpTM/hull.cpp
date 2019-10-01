@@ -105,6 +105,8 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* 
 			if (minPoint->x > pointsIn[i].x) {
 				minPoint = &pointsIn[i];
 				}
+      }
+      __transaction_atomic {
 			if (maxPoint->x < pointsIn[i].x) {
 				maxPoint = &pointsIn[i];
 				}
