@@ -131,14 +131,14 @@ index_t mask_count(BoolMatrix mask, index_t nr, index_t nc) {
   {
 	#pragma omp for schedule(static)
 			for (r = 0; r < nr; r++) {
-				__transaction_relaxed {
+				//__transaction_relaxed {
 					#pragma omp parallel for schedule(static)
 						  for (c = 0; c < nc; c++) {
 							if (MATRIX_RECT_NC(mask, r, c, nc)) {
 							  sum++; 
 							}
 						  }
-					  }
+					  //}
 		}
 		__transaction_atomic {sum2 += sum;}
 	}

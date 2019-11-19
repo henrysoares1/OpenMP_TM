@@ -34,7 +34,7 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
 			}
 		}
 	}
-	printf("vMax: %d \n", vMax);
+	//printf("vMax: %d \n", vMax);
   // initialize histogram
   try {
     hist = NEW_VECTOR_SZ(index_t, vMax + 1);
@@ -51,22 +51,22 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
   {
 	#pragma omp for schedule(static)
 		for (r = 0; r < nr; r++) {
-		__transaction_relaxed{	
+		
 			#pragma omp parallel for schedule(static)
 				  for (c = 0; c < nc; c++) {
-					hist[MATRIX_RECT(matrix, r, c)]++;
+					__transaction_atomic{hist[MATRIX_RECT(matrix, r, c)]++;}
 				  }
-			  }
+			  
 		}
   }
 
   // include
   retain = (index_t)(threshPercent * nc * nr);
-  printf("retain: %ld \n", retain);
   for (i = vMax; ((i >= 0) && (retain > 0)); i--) {
     retain -= hist[i];
     //printf("hist: %ld \n", hist[i]);
   }
+  //printf("retain: %ld \n", retain);
   retain = i;
 
   delete [] hist;
