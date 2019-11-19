@@ -98,11 +98,12 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
 
   // include
   retain = (index_t)(threshPercent * nc * nr);
-  printf("retain: %ld \n", retain);
+  //printf("retain: %ld \n", retain);
   for (i = vMax; ((i >= 0) && (retain > 0)); i--) {
     retain -= hist[i];
-    //printf("hist: %ld \n", hist[i]);
+    printf("hist: %ld \n", hist[i]);
   }
+  printf("retain: %ld \n", retain);
   retain = i;
 
   delete [] hist;
