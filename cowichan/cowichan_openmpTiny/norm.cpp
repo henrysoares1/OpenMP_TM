@@ -85,14 +85,15 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
  minPoint->y = points[0].y;
  maxPoint->x = points[0].x;
  maxPoint->y = points[0].y;
- stm_init_thread();
  #pragma omp parallel
  {
+ 	stm_init_thread();
+ 	STM_START();
 	 //index_t thread_num = omp_get_thread_num();
  #pragma omp for schedule(static)	
 		 for (index_t i = 0; i < n; i++) {
 			//__transaction_atomic {
-			STM_START();	
+				
 			if (STM_READ_POINT(&minPoint->x) > points[i].x) {
 				STM_STORE(&minPoint->x, points[i].x);
 			}			
@@ -105,6 +106,7 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
 			if (STM_READ_POINT(&maxPoint->y) < points[i].y) {
 				STM_STORE(&maxPoint->y, points[i].y);
 			}
+			printf("ola %ld \n", i);
 			stm_commit();
 		}
 		stm_exit_thread();
@@ -113,5 +115,3 @@ printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoin
 }
 
 }
-
-

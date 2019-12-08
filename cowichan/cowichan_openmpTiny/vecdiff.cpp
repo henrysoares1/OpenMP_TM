@@ -38,9 +38,10 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
 
   STM_STARTUP();
 
-  stm_init_thread();
+  
 #pragma omp parallel private(diff)
   {
+  	stm_init_thread();
   	STM_START();
 	 //index_t thread_num = omp_get_thread_num();
 	#pragma omp for schedule(static)
@@ -50,10 +51,9 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
 				STM_STORE(&maxDiff, diff);
 				//maxDiff = diff;
 			  }
-			
+			stm_commit();
 		}
   }
-  stm_commit();
 
   STM_STATS();
   stm_exit();
