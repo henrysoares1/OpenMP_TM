@@ -5,6 +5,7 @@
  */
 
 #include "cowichan_openmp.hpp"
+#include "tinySTM.h"
 
 namespace cowichan_openmp
 {
@@ -88,7 +89,7 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* 
 
   Point* minPoint;
   Point* maxPoint;
-
+  STM_GLOBAL_INITIALIZE();
   // checking cutoff value here prevents allocating unnecessary memory
   // for the reduction
   if(n > CowichanOpenMP::HULL_CUTOFF) { //if(n > CowichanOpenMP::HULL_CUTOFF) {
@@ -98,20 +99,26 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* 
     // figure out the points with minimum and maximum x values
   #pragma omp parallel
     {
+    	STM_INITIALIZE_THREAD();
 
   #pragma omp for schedule(static)
       for (index_t i = 1; i < n; i++) {
-		__transaction_atomic {	
-			if (minPoint->x > pointsIn[i].x) {
-				minPoint = &pointsIn[i];
+		//__transaction_atomic {
+		STM_START_TRANSACTION();	
+			if (stm_load_float(&minPoint->x) > pointsIn[i].x) {
+				(Point *)stm_store_float(&minPoint, &pointsIn[i]);
+				//minPoint = &pointsIn[i];
 				}
-      }
-      __transaction_atomic {
-			if (maxPoint->x < pointsIn[i].x) {
-				maxPoint = &pointsIn[i];
+      //}
+      //__transaction_atomic {
+			if (stm_load_float(&maxPoint->x) < pointsIn[i].x) {
+				(Point *)stm_store_float(&maxPoint, &pointsIn[i]);
+				//maxPoint = &pointsIn[i];
 				}
-			}
+			//}
+				STM_TRY_COMMIT();
 		}
+		STM_FINALIZE_THREAD();
 	}
   } else {
     minPoint = &pointsIn[0];
@@ -132,6 +139,8 @@ void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* 
   // use these as initial pivots
   split (pointsIn, n, pointsOut, hn, minPoint, maxPoint);
   split (pointsIn, n, pointsOut, hn, maxPoint, minPoint);
+  STM_PRINT_STATISTICS();
+  STM_GLOBAL_FINALIZE();
 }
 
 void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
@@ -150,16 +159,22 @@ maxPoint = &pointsIn[0];
 maxCross = Point::cross (*p1, *p2, pointsIn[0]);
 #pragma omp parallel private(currentCross)
     {
+    	STM_INITIALIZE_THREAD();
 #pragma omp for schedule(static)
       for (index_t i = 1; i < n; i++) {
+      	STM_START_TRANSACTION();
 			currentCross = Point::cross (*p1, *p2, pointsIn[i]);
-			__transaction_atomic {
-			if (currentCross > maxCross) {
-			  maxPoint = &pointsIn[i];
-			  maxCross = currentCross;
+			//__transaction_atomic {
+			if (currentCross > stm_load_float(&maxCross)) {
+			  stm_store_float(&maxPoint, &pointsIn[i]);
+			  //maxPoint = &pointsIn[i];
+			  stm_store_float(&maxCross, currentCross);
+			  //maxCross = currentCross;
 			}
-		}
+		//}
+			STM_TRY_COMMIT();
 	}
+	STM_FINALIZE_THREAD();
   }
   }else{
     maxPoint = &pointsIn[0];
