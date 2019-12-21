@@ -5,71 +5,71 @@ cowichan.o: ../cowichan/cowichan.cpp
 	g++ -Wall -m64 -fopenmp -D LIN64 -O2 -c ../cowichan/cowichan.cpp
 
 clean:	
-	rm *.o
+	rm *.o *.txt *.png
 
 run:
-	export OMP_NUM_THREADS=4
-	$(info executando vecdiff com 4 threads)
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	OMP_NUM_THREADS=4 ./cowichan_openmp outer >> out4.txt
+	
 
-	export OMP_NUM_THREADS=20
-	$(info executando vecdiff com 20 threads)
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
-	./cowichan_openmp vecdiff
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+	OMP_NUM_THREADS=20 ./cowichan_openmp outer >> out20.txt
+
+	paste out4.txt out20.txt > out.txt
+	gnuplot boxplot.gnu

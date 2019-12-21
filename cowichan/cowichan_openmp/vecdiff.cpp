@@ -14,7 +14,7 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
 
   Vector maxDiffs = NULL;
   index_t num_threads = omp_get_max_threads();
-  printf("threads =%ld \n", num_threads);
+  //printf("threads =%ld \n", num_threads);
 
   try {
     maxDiffs = NEW_VECTOR_SZ(real, num_threads);
@@ -44,7 +44,7 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
 
   delete [] maxDiffs;
 	
-  printf("maxDiff =%f \n", maxDiff);
+  //printf("maxDiff =%f \n", maxDiff);
   return maxDiff;
 }
 

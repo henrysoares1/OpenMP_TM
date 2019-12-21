@@ -48,7 +48,7 @@ void CowichanOpenMP::outer (PointVector points, Matrix matrix, Vector vector)
       dMax = dMaxes[i];
     }
   }
-  printf("dMax: %f \n", dMax);
+  //printf("dMax: %f \n", dMax);
 
   delete [] dMaxes;
 
