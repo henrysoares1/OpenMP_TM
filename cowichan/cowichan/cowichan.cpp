@@ -96,7 +96,7 @@ void print_elapsed_time (INT64 start, INT64 end)
 {
   INT64 freq = get_freq ();
   std::cout.precision(5);
-  std::cout << (((double) (end - start)) / ((double) freq)) << " seconds";
+  std::cout << (((double) (end - start)) / ((double) freq));
   std::cout.flush();
 }
 
@@ -104,7 +104,7 @@ void timeInfo(INT64 *start, INT64 *end, std::string message) {
   *start = *end;
   *end = get_ticks();
   #ifdef TEST_TIME
-    std::cout << message << ": ";
+    //std::cout << message << ": ";
     print_elapsed_time(*start, *end);
     std::cout << std::endl;
   #endif
@@ -421,7 +421,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       hull (pointsIn, pointsOut);
-      print_vector(pointsOut);
+      //print_vector(pointsOut);
       timeInfo(&start, &end, HULL);
 
       // clean up
@@ -456,7 +456,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       end = get_ticks ();
       outer (points, matrix, vector);
       //print_square_matrix<real> (matrix);
-      print_vector<real> (vector);
+      //print_vector<real> (vector);
 	  timeInfo(&start, &end, OUTER);
       // clean up
       delete [] points;
@@ -550,7 +550,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       end = get_ticks ();
       sor (matrix, target, solution);
    
-      print_vector<real> (solution);
+      //print_vector<real> (solution);
       timeInfo(&start, &end, SOR);
 
       // clean up

@@ -1,0 +1,60 @@
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.06
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.05
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.03
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.03
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.08
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.03
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.07
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.05
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.09
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.06
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.05
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.06
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.03
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.03
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.03
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.02
+maxPoint x:19.999813 minPoint x:-19.999464 maxPoint y:19.999599 minPoint y:-19.999960 
+0.04

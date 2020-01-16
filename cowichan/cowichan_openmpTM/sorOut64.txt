@@ -1,0 +1,240 @@
+maxDiff: 0.000020 
+maxDiff: 0.911394 
+maxDiff: 0.099344 
+maxDiff: 0.011012 
+maxDiff: 0.001210 
+maxDiff: 0.000131 
+maxDiff: 0.000014 
+1.77
+maxDiff: 0.000020 
+maxDiff: 0.911058 
+maxDiff: 0.099845 
+maxDiff: 0.011006 
+maxDiff: 0.001213 
+maxDiff: 0.000133 
+maxDiff: 0.000014 
+1.69
+maxDiff: 0.000020 
+maxDiff: 0.912891 
+maxDiff: 0.099411 
+maxDiff: 0.010859 
+maxDiff: 0.001196 
+maxDiff: 0.000129 
+maxDiff: 0.000014 
+1.82
+maxDiff: 0.000020 
+maxDiff: 0.910432 
+maxDiff: 0.101509 
+maxDiff: 0.010968 
+maxDiff: 0.001216 
+maxDiff: 0.000132 
+maxDiff: 0.000014 
+1.7
+maxDiff: 0.000020 
+maxDiff: 0.910397 
+maxDiff: 0.099555 
+maxDiff: 0.010932 
+maxDiff: 0.001200 
+maxDiff: 0.000131 
+maxDiff: 0.000014 
+1.73
+maxDiff: 0.000020 
+maxDiff: 0.912271 
+maxDiff: 0.100042 
+maxDiff: 0.011065 
+maxDiff: 0.001218 
+maxDiff: 0.000133 
+maxDiff: 0.000014 
+1.66
+maxDiff: 0.000020 
+maxDiff: 0.910501 
+maxDiff: 0.099040 
+maxDiff: 0.010990 
+maxDiff: 0.001216 
+maxDiff: 0.000133 
+maxDiff: 0.000014 
+1.68
+maxDiff: 0.000020 
+maxDiff: 0.912348 
+maxDiff: 0.099656 
+maxDiff: 0.010993 
+maxDiff: 0.001212 
+maxDiff: 0.000132 
+maxDiff: 0.000014 
+1.72
+maxDiff: 0.000020 
+maxDiff: 0.910311 
+maxDiff: 0.099497 
+maxDiff: 0.011039 
+maxDiff: 0.001202 
+maxDiff: 0.000128 
+maxDiff: 0.000013 
+1.76
+maxDiff: 0.000020 
+maxDiff: 0.910921 
+maxDiff: 0.100187 
+maxDiff: 0.010971 
+maxDiff: 0.001180 
+maxDiff: 0.000129 
+maxDiff: 0.000014 
+1.72
+maxDiff: 0.000020 
+maxDiff: 0.910957 
+maxDiff: 0.099609 
+maxDiff: 0.011056 
+maxDiff: 0.001224 
+maxDiff: 0.000132 
+maxDiff: 0.000014 
+1.63
+maxDiff: 0.000020 
+maxDiff: 0.911723 
+maxDiff: 0.101527 
+maxDiff: 0.010912 
+maxDiff: 0.001189 
+maxDiff: 0.000129 
+maxDiff: 0.000014 
+1.89
+maxDiff: 0.000020 
+maxDiff: 0.911613 
+maxDiff: 0.099823 
+maxDiff: 0.010977 
+maxDiff: 0.001197 
+maxDiff: 0.000131 
+maxDiff: 0.000014 
+1.9
+maxDiff: 0.000020 
+maxDiff: 0.911633 
+maxDiff: 0.098887 
+maxDiff: 0.010933 
+maxDiff: 0.001178 
+maxDiff: 0.000129 
+maxDiff: 0.000014 
+1.76
+maxDiff: 0.000020 
+maxDiff: 0.911193 
+maxDiff: 0.099389 
+maxDiff: 0.010876 
+maxDiff: 0.001183 
+maxDiff: 0.000130 
+maxDiff: 0.000014 
+1.87
+maxDiff: 0.000020 
+maxDiff: 0.910833 
+maxDiff: 0.099239 
+maxDiff: 0.011059 
+maxDiff: 0.001207 
+maxDiff: 0.000129 
+maxDiff: 0.000014 
+1.67
+maxDiff: 0.000020 
+maxDiff: 0.912320 
+maxDiff: 0.100030 
+maxDiff: 0.010908 
+maxDiff: 0.001198 
+maxDiff: 0.000131 
+maxDiff: 0.000014 
+1.73
+maxDiff: 0.000020 
+maxDiff: 0.911215 
+maxDiff: 0.098918 
+maxDiff: 0.010855 
+maxDiff: 0.001196 
+maxDiff: 0.000131 
+maxDiff: 0.000014 
+1.73
+maxDiff: 0.000020 
+maxDiff: 0.911067 
+maxDiff: 0.101071 
+maxDiff: 0.010855 
+maxDiff: 0.001194 
+maxDiff: 0.000130 
+maxDiff: 0.000014 
+1.74
+maxDiff: 0.000020 
+maxDiff: 0.911103 
+maxDiff: 0.099237 
+maxDiff: 0.011001 
+maxDiff: 0.001218 
+maxDiff: 0.000130 
+maxDiff: 0.000014 
+1.69
+maxDiff: 0.000020 
+maxDiff: 0.911584 
+maxDiff: 0.099764 
+maxDiff: 0.010888 
+maxDiff: 0.001198 
+maxDiff: 0.000130 
+maxDiff: 0.000014 
+1.69
+maxDiff: 0.000020 
+maxDiff: 0.910785 
+maxDiff: 0.099329 
+maxDiff: 0.010804 
+maxDiff: 0.001191 
+maxDiff: 0.000130 
+maxDiff: 0.000014 
+1.65
+maxDiff: 0.000020 
+maxDiff: 0.912525 
+maxDiff: 0.100237 
+maxDiff: 0.010906 
+maxDiff: 0.001182 
+maxDiff: 0.000129 
+maxDiff: 0.000014 
+1.76
+maxDiff: 0.000020 
+maxDiff: 0.911039 
+maxDiff: 0.102204 
+maxDiff: 0.011083 
+maxDiff: 0.001216 
+maxDiff: 0.000132 
+maxDiff: 0.000014 
+1.79
+maxDiff: 0.000020 
+maxDiff: 0.911428 
+maxDiff: 0.099483 
+maxDiff: 0.011043 
+maxDiff: 0.001214 
+maxDiff: 0.000130 
+maxDiff: 0.000013 
+1.86
+maxDiff: 0.000020 
+maxDiff: 0.911081 
+maxDiff: 0.099157 
+maxDiff: 0.011035 
+maxDiff: 0.001204 
+maxDiff: 0.000131 
+maxDiff: 0.000014 
+1.8
+maxDiff: 0.000020 
+maxDiff: 0.910328 
+maxDiff: 0.100639 
+maxDiff: 0.010885 
+maxDiff: 0.001177 
+maxDiff: 0.000128 
+maxDiff: 0.000014 
+1.96
+maxDiff: 0.000020 
+maxDiff: 0.910272 
+maxDiff: 0.099678 
+maxDiff: 0.011005 
+maxDiff: 0.001220 
+maxDiff: 0.000133 
+maxDiff: 0.000014 
+1.73
+maxDiff: 0.000020 
+maxDiff: 0.911312 
+maxDiff: 0.100038 
+maxDiff: 0.010931 
+maxDiff: 0.001190 
+maxDiff: 0.000127 
+maxDiff: 0.000014 
+1.82
+maxDiff: 0.000020 
+maxDiff: 0.912676 
+maxDiff: 0.099269 
+maxDiff: 0.011036 
+maxDiff: 0.001189 
+maxDiff: 0.000128 
+maxDiff: 0.000014 
+1.64

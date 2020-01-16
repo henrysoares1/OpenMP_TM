@@ -1,8 +1,8 @@
 cowichan_openmp:	cowichan.o
-	g++ -Wall -m64 -fopenmp -D LIN64 -O2 -o cowichan_openmp *.cpp cowichan.o
+	g++ -Wall -m64 -fgnu-tm -fopenmp -D LIN64 -O2 -o cowichan_openmp *.cpp cowichan.o
 
 cowichan.o: ../cowichan/cowichan.cpp
-	g++ -Wall -m64 -fopenmp -D LIN64 -O2 -c ../cowichan/cowichan.cpp
+	g++ -Wall -m64 -fgnu-tm -fopenmp -D LIN64 -O2 -c ../cowichan/cowichan.cpp
 
 clean:	
 	rm *.o *.txt *.png
@@ -232,6 +232,8 @@ outer:
 	OMP_NUM_THREADS=128 ./cowichan_openmp outer >> outerOut128.txt
 	#paste outerOut4.txt outerOut20.txt > out.txt
 	gnuplot outerboxplot.gnu
+
+
 
 norm:
 	OMP_NUM_THREADS=2 ./cowichan_openmp norm >> normOut2.txt

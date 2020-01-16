@@ -27,7 +27,7 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
 			}
 		}
   }
-  printf("maxDiff =%f \n", maxDiff);
+  //printf("maxDiff =%f \n", maxDiff);
   return maxDiff;
 }
 

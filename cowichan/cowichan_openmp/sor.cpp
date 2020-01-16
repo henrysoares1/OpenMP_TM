@@ -29,7 +29,7 @@ void CowichanOpenMP::sor (Matrix matrix, Vector target, Vector solution)
   maxDiff = (real)(2 * SOR_TOLERANCE); // to forestall early exit
 
   for (t = 0; (t < SOR_MAX_ITERS) && (maxDiff >= SOR_TOLERANCE); t++) {
-	printf("maxDiff: %f \n", maxDiff);
+	//printf("maxDiff: %f \n", maxDiff);
     maxDiff = 0.0;
 
 #pragma omp parallel private(oldSolution, diff, sum, c) firstprivate(maxDiff)

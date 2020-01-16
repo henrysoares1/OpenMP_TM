@@ -33,7 +33,7 @@ void CowichanOpenMP::outer (PointVector points, Matrix matrix, Vector vector){
     
 	}
   }
-  printf("dMax: %f \n", dMax);
+  //printf("dMax: %f \n", dMax);
   // matrix diagonal
   dMax *= n;
 #pragma omp parallel for schedule(static)
