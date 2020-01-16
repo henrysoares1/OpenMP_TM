@@ -110,7 +110,7 @@ void findMinMax(PointVector points, index_t n, Point* minPoint,
   delete [] minPoints;
   delete [] maxPoints;
 	
-  printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);
+  //printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);
 	
 }
 

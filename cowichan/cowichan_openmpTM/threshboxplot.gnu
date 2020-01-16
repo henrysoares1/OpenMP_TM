@@ -1,11 +1,11 @@
 set term png
 set output "threshGCCTMOut.png"
 set boxwidth 0.5
-set title "Thresh with openMP and GCC-TM"
+set title "Thresh GCC TM"
 set style fill solid 0.5
 set xlabel ""
 set ylabel "Execution time in seconds"
 set grid layerdefault
-set xtics ("2 Threads" 1, "4 Threads" 2, "8 Threads" 3, "16 Threads" 4, "32 Threads" 5, "64 Threads" 6, "128 Threads" 7)
+set xtics ("2 Threads" 1, "4 Threads" 2, "8 Threads" 3, "16 Threads" 4, "32 Threads" 5, "64 Threads" 6)
 set xtics rotate by -50
-plot "threshOut2.txt" using (1):1 notitle with boxplot, "threshOut4.txt" using (2):1 notitle with boxplot, "threshOut8.txt" using (3):1 notitle with boxplot, "threshOut16.txt" using (4):1 notitle with boxplot, "threshOut32.txt" using (5):1 notitle with boxplot, "threshOut64.txt" using (6):1 notitle with boxplot, "threshOut128.txt" using (7):1 notitle with boxplot
+plot "threshOut2.txt" using (1):1 notitle with boxplot, "threshOut4.txt" using (2):1 notitle with boxplot, "threshOut8.txt" using (3):1 notitle with boxplot, "threshOut16.txt" using (4):1 notitle with boxplot, "threshOut32.txt" using (5):1 notitle with boxplot, "threshOut64.txt" using (6):1 notitle with boxplot
