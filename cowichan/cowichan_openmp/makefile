@@ -76,7 +76,7 @@ all:
         done ; \
     done ;
 
-	gnuplot outerboxplot.gnu
+	#gnuplot outerboxplot.gnu
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
@@ -85,7 +85,7 @@ all:
         done ; \
     done ;
 
-	gnuplot normboxplot.gnu
+	#gnuplot normboxplot.gnu
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
@@ -94,7 +94,7 @@ all:
         done ; \
     done ;
 
-	gnuplot vecdiffboxplot.gnu
+	#gnuplot vecdiffboxplot.gnu
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
@@ -102,7 +102,7 @@ all:
 			OMP_NUM_THREADS=$$t ./cowichan_openmp sor >> sorOut$$t.txt ; \
         done ; \
     done ;
-	gnuplot sorboxplot.gnu
+	#gnuplot sorboxplot.gnu
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
@@ -111,7 +111,7 @@ all:
         done ; \
     done ;
 
-	gnuplot hullboxplot.gnu
+	#gnuplot hullboxplot.gnu
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
@@ -120,4 +120,4 @@ all:
         done ; \
     done ;
 
-	gnuplot threshboxplot.gnu
+	#gnuplot threshboxplot.gnu
