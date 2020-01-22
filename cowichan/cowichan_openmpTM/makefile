@@ -67,7 +67,7 @@ thresh:
         done ; \
     done ;
 
-	gnuplot threshboxplot.gnu
+	#gnuplot threshboxplot.gnu
 
 all:
 	for t in 2 4 8 16 32 64 ; do \
