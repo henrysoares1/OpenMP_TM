@@ -5,6 +5,7 @@
  */
 
 #include "cowichan_openmp.hpp"
+#include "tinySTM.h"
 
 /**
  * Works only on positive input.
@@ -19,20 +20,24 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
 
   // find max value in matrix
   vMax = 0;
+  STM_GLOBAL_INITIALIZE();
 #pragma omp parallel
 	{
+    STM_INITIALIZE_THREAD();
 	#pragma omp parallel for schedule(static)
 		for (r = 0; r < nr; r++) {
-			__transaction_relaxed {
+			//__transaction_relaxed {
 		#pragma omp parallel for schedule(static)
 		for (c = 0; c < nc; c++) {
-		   
-			if (vMax < MATRIX_RECT(matrix, r, c)) {
-				vMax = MATRIX_RECT(matrix, r, c);
+		   STM_START_TRANSACTION();
+			if (stm_load_u32(&vMax) < MATRIX_RECT(matrix, r, c)) {
+				stm_store_u32(&vMax,MATRIX_RECT(matrix, r, c));
 					}
+        STM_TRY_COMMIT();
 				}
-			}
+			//}
 		}
+  STM_FINALIZE_THREAD();
 	}
 	printf("vMax: %d \n", vMax);
   // initialize histogram
@@ -49,15 +54,19 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
   // count
 #pragma omp parallel
   {
+    STM_INITIALIZE_THREAD();
 	#pragma omp for schedule(static)
 		for (r = 0; r < nr; r++) {
 		
 			#pragma omp parallel for schedule(static)
 				  for (c = 0; c < nc; c++) {
-					__transaction_atomic{hist[MATRIX_RECT(matrix, r, c)]++;}
+            STM_START_TRANSACTION();
+            TM_STORE_LONG(&hist[MATRIX_RECT(matrix, r, c)] , hist[MATRIX_RECT(matrix, r, c)]++)
+				    //__transaction_atomic{hist[MATRIX_RECT(matrix, r, c)]++;}
+            STM_TRY_COMMIT();
 				  }
-			  
 		}
+  STM_FINALIZE_THREAD();
   }
 
   // include
@@ -79,6 +88,7 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
       MATRIX_RECT(mask, r, c) = ((index_t)MATRIX_RECT(matrix, r, c)) > retain;
     }
   }
-
+STM_PRINT_STATISTICS();
+STM_GLOBAL_FINALIZE();
 }
 

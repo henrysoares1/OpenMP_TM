@@ -47,7 +47,18 @@ extern "C" {
         sigjmp_buf * checkPoint = stm_start((stm_tx_attr_t) {0}); \
         sigsetjmp(*checkPoint, 0); 
     
-#define STM_TRY_COMMIT()    stm_commit();    
+#define STM_TRY_COMMIT()              stm_commit();    
+
+/*
+ * Load and store Pointers
+ */
+#define TM_LOAD_PTR(var)              stm_load_ptr((volatile void **) var)    
+#define TM_LOAD_POINT(var)            (Point*) TM_LOAD_PTR(var)   
+#define TM_STORE_PTR(var, val)        stm_store_ptr((volatile void **) var, val)
+#define TM_STORE_POINT(var, val)      TM_STORE_PTR((Point*) var, val)
+#define TM_STORE_LINT(var, val)       stm_store_long((volatile long *) var, val)
+#define TM_STORE_LONG(var, val)       TM_STORE_LINT((index_t*) var, val)
+    
 
 /*
  * Option: print global statistics, such as number of aborts and commits

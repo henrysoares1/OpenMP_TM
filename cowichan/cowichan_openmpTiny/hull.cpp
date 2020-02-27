@@ -7,30 +7,29 @@
 #include "cowichan_openmp.hpp"
 #include "tinySTM.h"
 
-namespace cowichan_openmp
-{
+namespace cowichan_openmp {
 
-/**
- * Runs quickhull algorithm.
- * \param pointsIn input points.
- * \param n number of inputs points to use.
- * \param pointsOut output points.
- * \param hn number of output points generated so far.
- */
-void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn);
+    /**
+     * Runs quickhull algorithm.
+     * \param pointsIn input points.
+     * \param n number of inputs points to use.
+     * \param pointsOut output points.
+     * \param hn number of output points generated so far.
+     */
+    void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn);
 
-/**
- * Recursive step of the quickhull algorithm - compute hull on one side of the
- * splitting line.
- * \param pointsIn input points.
- * \param n number of inputs points to use.
- * \param pointsOut output points.
- * \param hn number of output points generated so far.
- * \param p1 first point of the splitting line (p1,p2).
- * \param p2 second point of the splitting line (p1,p2).
- */
-void split(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
-    Point* p1, Point* p2);
+    /**
+     * Recursive step of the quickhull algorithm - compute hull on one side of the
+     * splitting line.
+     * \param pointsIn input points.
+     * \param n number of inputs points to use.
+     * \param pointsOut output points.
+     * \param hn number of output points generated so far.
+     * \param p1 first point of the splitting line (p1,p2).
+     * \param p2 second point of the splitting line (p1,p2).
+     */
+    void split(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
+            Point* p1, Point* p2);
 
 }
 
@@ -46,164 +45,161 @@ void split(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
  * the end of pointsIn vector.
  * NOTE: pointsIn vector gets modified by the algorithm.
  */
-void CowichanOpenMP::hull (PointVector pointsIn, PointVector pointsOut)
-{
-  index_t hn = 0;
-  index_t previous_hn = 0;
+void CowichanOpenMP::hull(PointVector pointsIn, PointVector pointsOut) {
+    index_t hn = 0;
+    index_t previous_hn = 0;
 
-  // while not all points are used up then run quickhull on the rest of points
-  while (n != hn) {
-    // exclude added points from pointsIn by swapping them with points from the
-    // end of pointsIn vector in range (0, n - nused)
-    index_t added_i;
+    // while not all points are used up then run quickhull on the rest of points
+    while (n != hn) {
+        // exclude added points from pointsIn by swapping them with points from the
+        // end of pointsIn vector in range (0, n - nused)
+        index_t added_i;
 #pragma omp parallel for schedule(static)
-    for (added_i = previous_hn; added_i < hn; added_i++) {
-      // search for the added point
-      for (index_t i = 0; i < n - previous_hn; i++) {
-        if ((pointsIn[i].x == pointsOut[added_i].x)
-            && (pointsIn[i].y == pointsOut[added_i].y)) {
-          Point tmp = pointsIn[i];
-          pointsIn[i] = pointsIn[n - added_i - 1];
-          pointsIn[n - added_i - 1] = tmp;
-          break;
+        for (added_i = previous_hn; added_i < hn; added_i++) {
+            // search for the added point
+            for (index_t i = 0; i < n - previous_hn; i++) {
+                if ((pointsIn[i].x == pointsOut[added_i].x)
+                        && (pointsIn[i].y == pointsOut[added_i].y)) {
+                    Point tmp = pointsIn[i];
+                    pointsIn[i] = pointsIn[n - added_i - 1];
+                    pointsIn[n - added_i - 1] = tmp;
+                    break;
+                }
+            }
         }
-      }
+
+        previous_hn = hn;
+        quickhull(pointsIn, n - hn, pointsOut, &hn);
     }
-    
-    previous_hn = hn;
-    quickhull (pointsIn, n - hn, pointsOut, &hn);
-  }
 }
 
 /*****************************************************************************/
 
-namespace cowichan_openmp
-{
+namespace cowichan_openmp {
 
-void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn) {
-  // base case
-  if (n == 1) {
-    pointsOut[(*hn)++] = pointsIn[0];
-    return;
-  }
+    void quickhull(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn) {
+        // base case
+        if (n == 1) {
+            pointsOut[(*hn)++] = pointsIn[0];
+            return;
+        }
 
-  Point* minPoint;
-  Point* maxPoint;
-  STM_GLOBAL_INITIALIZE();
-  // checking cutoff value here prevents allocating unnecessary memory
-  // for the reduction
-  if(n > CowichanOpenMP::HULL_CUTOFF) { //if(n > CowichanOpenMP::HULL_CUTOFF) {
-    minPoint = &pointsIn[0];
-    maxPoint = &pointsIn[0];
+        Point* minPoint;
+        Point* maxPoint;
+        STM_GLOBAL_INITIALIZE();
+        // checking cutoff value here prevents allocating unnecessary memory
+        // for the reduction
+        if (n > CowichanOpenMP::HULL_CUTOFF) { //if(n > CowichanOpenMP::HULL_CUTOFF) {
+            minPoint = &pointsIn[0];
+            maxPoint = &pointsIn[0];
 
-    // figure out the points with minimum and maximum x values
-  #pragma omp parallel
-    {
-    	STM_INITIALIZE_THREAD();
+            // figure out the points with minimum and maximum x values
+#pragma omp parallel
+            {
+                STM_INITIALIZE_THREAD();
 
-  #pragma omp for schedule(static)
-      for (index_t i = 1; i < n; i++) {
-		//__transaction_atomic {
-		STM_START_TRANSACTION();	
-			if (stm_load_float(&minPoint->x) > pointsIn[i].x) {
-				(Point *)stm_store_float(&minPoint, &pointsIn[i]);
-				//minPoint = &pointsIn[i];
-				}
-      //}
-      //__transaction_atomic {
-			if (stm_load_float(&maxPoint->x) < pointsIn[i].x) {
-				(Point *)stm_store_float(&maxPoint, &pointsIn[i]);
-				//maxPoint = &pointsIn[i];
-				}
-			//}
-				STM_TRY_COMMIT();
-		}
-		STM_FINALIZE_THREAD();
-	}
-  } else {
-    minPoint = &pointsIn[0];
-    maxPoint = &pointsIn[0];
-
-    // figure out the points with minimum and maximum x values
-    index_t i;
-    for (i = 1; i < n; i++) {
-      if (minPoint->x > pointsIn[i].x) {
-        minPoint = &pointsIn[i];
-      }
-      if (maxPoint->x < pointsIn[i].x) {
-        maxPoint = &pointsIn[i];
-      }
-    }
-  }
-
-  // use these as initial pivots
-  split (pointsIn, n, pointsOut, hn, minPoint, maxPoint);
-  split (pointsIn, n, pointsOut, hn, maxPoint, minPoint);
-  STM_PRINT_STATISTICS();
-  STM_GLOBAL_FINALIZE();
-}
-
-void split (PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
-    Point* p1, Point* p2) {
-
-	Point* maxPoint;
-	real maxCross;
-	real currentCross;
-
-  // checking cutoff value here prevents allocating unnecessary memory
-  // for the reduction
-  if (n > CowichanOpenMP::HULL_CUTOFF) {
-
-    // compute the signed distances from the line for each point
-maxPoint = &pointsIn[0];
-maxCross = Point::cross (*p1, *p2, pointsIn[0]);
-#pragma omp parallel private(currentCross)
-    {
-    	STM_INITIALIZE_THREAD();
 #pragma omp for schedule(static)
-      for (index_t i = 1; i < n; i++) {
-      	STM_START_TRANSACTION();
-			currentCross = Point::cross (*p1, *p2, pointsIn[i]);
-			//__transaction_atomic {
-			if (currentCross > stm_load_float(&maxCross)) {
-			  stm_store_float(&maxPoint, &pointsIn[i]);
-			  //maxPoint = &pointsIn[i];
-			  stm_store_float(&maxCross, currentCross);
-			  //maxCross = currentCross;
-			}
-		//}
-			STM_TRY_COMMIT();
-	}
-	STM_FINALIZE_THREAD();
-  }
-  }else{
-    maxPoint = &pointsIn[0];
-    maxCross = Point::cross (*p1, *p2, pointsIn[0]);
+                for (index_t i = 1; i < n; i++) {
+                    //__transaction_atomic {
+                    STM_START_TRANSACTION();
+                    if ((TM_LOAD_POINT(&minPoint))->x > pointsIn[i].x) {
+                        TM_STORE_PTR(&minPoint, &pointsIn[i]);
+                        //minPoint = &pointsIn[i];
+                    }
+                    //}
+                    //__transaction_atomic {
+                    if ((TM_LOAD_POINT(&maxPoint))->x < pointsIn[i].x) {
+                        TM_STORE_PTR(&maxPoint, &pointsIn[i]);
+                        //maxPoint = &pointsIn[i];
+                    }
+                    //}
+                    STM_TRY_COMMIT();
+                }
+                STM_FINALIZE_THREAD();
+            }
+        } else {
+            minPoint = &pointsIn[0];
+            maxPoint = &pointsIn[0];
 
-    // compute the signed distances from the line for each point
-    for (index_t i = 1; i < n; i++) {
-      real currentCross = Point::cross (*p1, *p2, pointsIn[i]);
-      if (currentCross > maxCross) {
-        maxPoint = &pointsIn[i];
-        maxCross = currentCross;
-      }
+            // figure out the points with minimum and maximum x values
+            index_t i;
+            for (i = 1; i < n; i++) {
+                if (minPoint->x > pointsIn[i].x) {
+                    minPoint = &pointsIn[i];
+                }
+                if (maxPoint->x < pointsIn[i].x) {
+                    maxPoint = &pointsIn[i];
+                }
+            }
+        }
+
+        // use these as initial pivots
+        split(pointsIn, n, pointsOut, hn, minPoint, maxPoint);
+        split(pointsIn, n, pointsOut, hn, maxPoint, minPoint);
+        STM_PRINT_STATISTICS();
+        STM_GLOBAL_FINALIZE();
     }
-  }
-  // is there a point in the positive half-space?
-  // if so, it has maximal distance, and we must recurse based on that point.
-  if (maxCross > 0.0) {
-    // recurse on the new set with the given far point
-    split (pointsIn, n, pointsOut, hn, p1, maxPoint);
-    split (pointsIn, n, pointsOut, hn, maxPoint, p2);
-    return;
-  }
 
-  // otherwise, it's not on the right side; we don't need to split anymore.
-  // this is because all points are inside the hull when we use this half-space.
-  // add the first point and return.
-  pointsOut[(*hn)++] = *p1;
+    void split(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,
+            Point* p1, Point* p2) {
+
+        Point* maxPoint;
+        real maxCross;
+        real currentCross;
+
+        // checking cutoff value here prevents allocating unnecessary memory
+        // for the reduction
+        if (n > CowichanOpenMP::HULL_CUTOFF) {
+
+            // compute the signed distances from the line for each point
+            maxPoint = &pointsIn[0];
+            maxCross = Point::cross(*p1, *p2, pointsIn[0]);
+#pragma omp parallel private(currentCross)
+            {
+                STM_INITIALIZE_THREAD();
+#pragma omp for schedule(static)
+                for (index_t i = 1; i < n; i++) {
+                    STM_START_TRANSACTION();
+                    currentCross = Point::cross(*p1, *p2, pointsIn[i]);
+                    //__transaction_atomic {
+                    if (currentCross > stm_load_float(&maxCross)) {
+                        TM_STORE_PTR(&maxPoint, &pointsIn[i]);
+                        //maxPoint = &pointsIn[i];
+                        stm_store_float(&maxCross, currentCross);
+                        //maxCross = currentCross;
+                    }
+                    //}
+                    STM_TRY_COMMIT();
+                }
+                STM_FINALIZE_THREAD();
+            }
+        } else {
+            maxPoint = &pointsIn[0];
+            maxCross = Point::cross(*p1, *p2, pointsIn[0]);
+
+            // compute the signed distances from the line for each point
+            for (index_t i = 1; i < n; i++) {
+                real currentCross = Point::cross(*p1, *p2, pointsIn[i]);
+                if (currentCross > maxCross) {
+                    maxPoint = &pointsIn[i];
+                    maxCross = currentCross;
+                }
+            }
+        }
+        // is there a point in the positive half-space?
+        // if so, it has maximal distance, and we must recurse based on that point.
+        if (maxCross > 0.0) {
+            // recurse on the new set with the given far point
+            split(pointsIn, n, pointsOut, hn, p1, maxPoint);
+            split(pointsIn, n, pointsOut, hn, maxPoint, p2);
+            return;
+        }
+
+        // otherwise, it's not on the right side; we don't need to split anymore.
+        // this is because all points are inside the hull when we use this half-space.
+        // add the first point and return.
+        pointsOut[(*hn)++] = *p1;
+
+    }
 
 }
-
-}
-

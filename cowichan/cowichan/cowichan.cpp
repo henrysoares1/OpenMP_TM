@@ -421,7 +421,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       hull (pointsIn, pointsOut);
-      //print_vector(pointsOut);
+      print_vector(pointsOut);
       timeInfo(&start, &end, HULL);
 
       // clean up
