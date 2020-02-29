@@ -14,6 +14,7 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
 
   index_t* hist = NULL; // histogram
   index_t i;
+  index_t newValue;
   index_t r, c;
   INT_TYPE vMax; // max value in matrix
   index_t retain; // selection
@@ -39,7 +40,7 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
 		}
   STM_FINALIZE_THREAD();
 	}
-	printf("vMax: %d \n", vMax);
+	//printf("vMax: %d \n", vMax);
   // initialize histogram
   try {
     hist = NEW_VECTOR_SZ(index_t, vMax + 1);
@@ -58,10 +59,12 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
 	#pragma omp for schedule(static)
 		for (r = 0; r < nr; r++) {
 		
-			#pragma omp parallel for schedule(static)
+			#pragma omp parallel for schedule(static) private(newValue)
 				  for (c = 0; c < nc; c++) {
             STM_START_TRANSACTION();
-            TM_STORE_LONG(&hist[MATRIX_RECT(matrix, r, c)] , hist[MATRIX_RECT(matrix, r, c)]++)
+            newValue = stm_load_long(&hist[MATRIX_RECT(matrix, r, c)]) + 1;
+            stm_store_long(&hist[MATRIX_RECT(matrix, r, c)], newValue);
+            //TM_STORE_LONG(&hist[MATRIX_RECT(matrix, r, c)] , hist[MATRIX_RECT(matrix, r, c)]++)
 				    //__transaction_atomic{hist[MATRIX_RECT(matrix, r, c)]++;}
             STM_TRY_COMMIT();
 				  }
@@ -73,9 +76,9 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
   retain = (index_t)(threshPercent * nc * nr);
   for (i = vMax; ((i >= 0) && (retain > 0)); i--) {
     retain -= hist[i];
-    printf("hist: %ld \n", hist[i]);
+    //printf("hist: %ld \n", hist[i]);
   }
-  printf("retain: %ld \n", retain);
+  //printf("retain: %ld \n", retain);
   retain = i;
 
   delete [] hist;
@@ -88,7 +91,7 @@ void CowichanOpenMP::thresh(IntMatrix matrix, BoolMatrix mask) {
       MATRIX_RECT(mask, r, c) = ((index_t)MATRIX_RECT(matrix, r, c)) > retain;
     }
   }
-STM_PRINT_STATISTICS();
+//STM_PRINT_STATISTICS();
 STM_GLOBAL_FINALIZE();
 }
 

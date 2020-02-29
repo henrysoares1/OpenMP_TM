@@ -36,7 +36,7 @@ void CowichanOpenMP::norm (PointVector pointsIn, PointVector pointsOut)
   // compute scaling factors
   STM_GLOBAL_INITIALIZE();
   findMinMax(pointsIn, n, &minPoint, &maxPoint);
-  STM_PRINT_STATISTICS();
+  //STM_PRINT_STATISTICS();
   STM_GLOBAL_FINALIZE();
 
   sclX = (real)((maxPoint.x == minPoint.x) ?
@@ -88,7 +88,7 @@ void findMinMax(PointVector points, index_t n, Point* minPoint, Point* maxPoint)
 		}
 		STM_FINALIZE_THREAD();
   }
-printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);
+//printf("maxPoint x:%lf minPoint x:%lf maxPoint y:%lf minPoint y:%lf \n", maxPoint->x, minPoint->x, maxPoint->y, minPoint->y);
 }
 
 }

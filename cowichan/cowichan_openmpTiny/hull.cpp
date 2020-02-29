@@ -48,7 +48,7 @@ namespace cowichan_openmp {
 void CowichanOpenMP::hull(PointVector pointsIn, PointVector pointsOut) {
     index_t hn = 0;
     index_t previous_hn = 0;
-
+    STM_GLOBAL_INITIALIZE();
     // while not all points are used up then run quickhull on the rest of points
     while (n != hn) {
         // exclude added points from pointsIn by swapping them with points from the
@@ -70,7 +70,10 @@ void CowichanOpenMP::hull(PointVector pointsIn, PointVector pointsOut) {
 
         previous_hn = hn;
         quickhull(pointsIn, n - hn, pointsOut, &hn);
+        
     }
+    //STM_PRINT_STATISTICS();
+    STM_GLOBAL_FINALIZE();
 }
 
 /*****************************************************************************/
@@ -86,7 +89,6 @@ namespace cowichan_openmp {
 
         Point* minPoint;
         Point* maxPoint;
-        STM_GLOBAL_INITIALIZE();
         // checking cutoff value here prevents allocating unnecessary memory
         // for the reduction
         if (n > CowichanOpenMP::HULL_CUTOFF) { //if(n > CowichanOpenMP::HULL_CUTOFF) {
@@ -136,8 +138,6 @@ namespace cowichan_openmp {
         // use these as initial pivots
         split(pointsIn, n, pointsOut, hn, minPoint, maxPoint);
         split(pointsIn, n, pointsOut, hn, maxPoint, minPoint);
-        STM_PRINT_STATISTICS();
-        STM_GLOBAL_FINALIZE();
     }
 
     void split(PointVector pointsIn, index_t n, PointVector pointsOut, index_t* hn,

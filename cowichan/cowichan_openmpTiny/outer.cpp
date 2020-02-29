@@ -39,7 +39,7 @@ void CowichanOpenMP::outer (PointVector points, Matrix matrix, Vector vector){
 	}
   STM_FINALIZE_THREAD();
   }
-  printf("dMax: %f \n", dMax);
+  //printf("dMax: %f \n", dMax);
   //STM_PRINT_STATISTICS();
   STM_GLOBAL_FINALIZE();
   // matrix diagonal

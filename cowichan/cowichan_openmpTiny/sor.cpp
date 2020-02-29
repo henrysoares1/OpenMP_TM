@@ -22,7 +22,7 @@ void CowichanOpenMP::sor (Matrix matrix, Vector target, Vector solution)
   maxDiff = (real)(2 * SOR_TOLERANCE); // to forestall early exit
   STM_GLOBAL_INITIALIZE();
   for (t = 0; (t < SOR_MAX_ITERS) && (maxDiff >= SOR_TOLERANCE); t++) {
-	printf("maxDiff: %f \n", maxDiff);
+	//printf("maxDiff: %f \n", maxDiff);
     maxDiff = 0.0;
 
     
@@ -59,7 +59,7 @@ void CowichanOpenMP::sor (Matrix matrix, Vector target, Vector solution)
 		STM_FINALIZE_THREAD();
 	  }
   }
-  STM_PRINT_STATISTICS();
+  //STM_PRINT_STATISTICS();
   STM_GLOBAL_FINALIZE();
 
 }

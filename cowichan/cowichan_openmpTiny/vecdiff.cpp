@@ -33,7 +33,7 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
         STM_FINALIZE_THREAD();
   }
 
-  STM_PRINT_STATISTICS();
+  //STM_PRINT_STATISTICS();
   STM_GLOBAL_FINALIZE();
   //printf("maxDiff =%f \n", maxDiff);
   return maxDiff;

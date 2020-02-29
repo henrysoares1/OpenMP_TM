@@ -421,7 +421,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       // execute
       end = get_ticks ();
       hull (pointsIn, pointsOut);
-      print_vector(pointsOut);
+      //print_vector(pointsOut);
       timeInfo(&start, &end, HULL);
 
       // clean up
@@ -803,7 +803,7 @@ void Cowichan::chain(bool use_randmat, bool use_thresh)
   end = get_ticks ();
   hull (vector2, vector1);
   timeInfo(&start, &end, HULL);
-  print_vector(vector1);
+  //print_vector(vector1);
 
   // clean up
   delete [] vector2;
