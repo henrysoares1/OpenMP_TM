@@ -12,6 +12,8 @@ real CowichanOpenMP::vecdiff (Vector actual, Vector computed)
   real diff;
   real maxDiff;
 
+  //printf("%ld\n", n);
+
   Vector maxDiffs = NULL;
   index_t num_threads = omp_get_max_threads();
   //printf("threads =%ld \n", num_threads);

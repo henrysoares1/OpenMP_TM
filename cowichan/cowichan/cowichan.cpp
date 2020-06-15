@@ -257,8 +257,20 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
     }
     else if (strcmp (argv[1], THRESH) == 0) {
       // set up
-      nr = 25000;//nr = THRESH_NR;
-      nc = 25000;//nc = THRESH_NC;
+      //nr = 25000;//nr = THRESH_NR;
+      //nc = 25000;//nc = THRESH_NC;
+#ifdef SMALL_DATA
+      nr = THRESH_NR/2;
+      nc = THRESH_NC/2;
+#endif
+#ifdef MEDIUM_DATA
+      nr = THRESH_NR;
+      nc = THRESH_NC;
+#endif
+#ifdef BIG_DATA
+      nr = 2*THRESH_NR;
+      nc = 2*THRESH_NC;
+#endif
       threshPercent = THRESH_PERCENT;
       srand(RAND_SEED);
 
@@ -366,7 +378,16 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
     }
     else if (strcmp (argv[1], NORM) == 0) {
       // set up
-      n = 100000; //n = NORM_N;
+      //n = 100000; //n = NORM_N;
+#ifdef SMALL_DATA
+      n = 1000*NORM_N;
+#endif
+#ifdef MEDIUM_DATA
+      n = 5000*NORM_N;
+#endif
+#ifdef BIG_DATA
+      n = 10000*NORM_N;
+#endif
       srand(RAND_SEED);
 
       // initialize
@@ -398,7 +419,16 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
     }
     else if (strcmp (argv[1], HULL) == 0) {
       // set up
-      n = 100000; //n = HULL_N;
+      //n = 100000; //n = HULL_N;
+#ifdef SMALL_DATA
+      n = HULL_N/2;
+#endif
+#ifdef MEDIUM_DATA
+      n = HULL_N;
+#endif
+#ifdef BIG_DATA
+      n = 2*HULL_N;
+#endif
       srand(RAND_SEED);
 
       // initialize
@@ -430,7 +460,16 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
     }
     else if (strcmp (argv[1], OUTER) == 0) {
       // set up
-      n = 25000; // n = OUTER_N;
+      //n = 25000; // n = OUTER_N;
+#ifdef SMALL_DATA
+      n = OUTER_N/2;
+#endif
+#ifdef MEDIUM_DATA
+      n = OUTER_N;
+#endif
+#ifdef BIG_DATA
+      n = 2*OUTER_N;
+#endif
       srand(RAND_SEED);
 
       // initialize
@@ -512,7 +551,16 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
     }
     else if (strcmp (argv[1], SOR) == 0) {
       // set up
-      n = 25000;//n = SOR_N;
+      //n = 25000;//n = SOR_N;
+#ifdef SMALL_DATA
+      n = SOR_N/2;
+#endif
+#ifdef MEDIUM_DATA
+      n = SOR_N;
+#endif
+#ifdef BIG_DATA
+      n = 2*SOR_N;
+#endif
       srand(RAND_SEED);
 
       // initialize
@@ -597,7 +645,16 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
     }
     else if (strcmp (argv[1], VECDIFF) == 0) {
       // set up
-      n = VECDIFF_N;
+      //n = VECDIFF_N;
+#ifdef SMALL_DATA
+      n = 5000*VECDIFF_N;
+#endif
+#ifdef MEDIUM_DATA
+      n = 10000*VECDIFF_N;
+#endif
+#ifdef BIG_DATA
+      n = 50000*VECDIFF_N;
+#endif
       srand(RAND_SEED);
 
       // initialize
@@ -610,6 +667,7 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       }
       catch (...) {out_of_memory();}
 
+
       index_t r;
       for (r = 0; r < n; r++) {
         actual[r] = uniform ((real)RAND_MEAN, (real)RAND_RANGE);
@@ -618,6 +676,8 @@ void Cowichan::main (int argc, char* argv[], bool use_randmat, bool use_thresh)
       
       // execute
       end = get_ticks ();
+
+
 #ifdef OUTPUT_DATA
       real maxDiff = vecdiff (actual, computed);
 #else
