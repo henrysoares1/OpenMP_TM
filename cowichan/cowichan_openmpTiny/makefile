@@ -11,7 +11,10 @@ cowichan_openmp:	cowichan.o
 cowichan.o: ../cowichan/cowichan.cpp
 	g++ -Wall -m64  -fgnu-tm -fopenmp $(DATA) -D LIN64 -O2 -c ../cowichan/cowichan.cpp
 
-clean:	
+clean:
+	rm *.o
+
+clean_all:	
 	rm *.o *.txt *.png
 
 outer:
