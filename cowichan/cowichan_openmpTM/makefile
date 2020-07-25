@@ -1,8 +1,9 @@
 
 
 # Tamanho da entrada
-DATA= -DSMALL_DATA
-#DATA= -DMEDIUM_DATA
+
+#DATA= -DSMALL_DATA
+DATA= -DMEDIUM_DATA
 #DATA= -DBIG_DATA
 
 cowichan_openmp:	cowichan.o
