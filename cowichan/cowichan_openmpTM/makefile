@@ -3,8 +3,8 @@
 # Tamanho da entrada
 
 #DATA= -DSMALL_DATA
-DATA= -DMEDIUM_DATA
-#DATA= -DBIG_DATA
+#DATA= -DMEDIUM_DATA
+DATA= -DBIG_DATA
 
 cowichan_openmp:	cowichan.o
 	g++ -Wall -m64 -fgnu-tm -fopenmp $(DATA) -D LIN64 -O2 -o cowichan_openmp *.cpp cowichan.o
