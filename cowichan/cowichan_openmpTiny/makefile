@@ -14,6 +14,27 @@ cowichan.o: ../cowichan/cowichan.cpp
 clean:	
 	rm *.o *.txt *.png
 
+gnu:
+	gnuplot outerboxplot-DSMALL_DATA.gnu
+	gnuplot outerboxplot-DMEDIUM_DATA.gnu
+	gnuplot outerboxplot-DBIG_DATA.gnu
+	gnuplot normboxplot-DSMALL_DATA.gnu
+	gnuplot normboxplot-DMEDIUM_DATA.gnu
+	gnuplot normboxplot-DBIG_DATA.gnu
+	gnuplot vecdiffboxplot-DSMALL_DATA.gnu
+	gnuplot vecdiffboxplot-DMEDIUM_DATA.gnu
+	gnuplot vecdiffboxplot-DBIG_DATA.gnu
+	gnuplot sorboxplot-DSMALL_DATA.gnu
+	gnuplot sorboxplot-DMEDIUM_DATA.gnu
+	gnuplot sorboxplot-DBIG_DATA.gnu
+	gnuplot hullboxplot-DSMALL_DATA.gnu
+	gnuplot hullboxplot-DMEDIUM_DATA.gnu
+	gnuplot hullboxplot-DBIG_DATA.gnu
+	gnuplot threshboxplot-DSMALL_DATA.gnu
+	gnuplot threshboxplot-DMEDIUM_DATA.gnu
+	gnuplot threshboxplot-DBIG_DATA.gnu
+
+
 outer:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
