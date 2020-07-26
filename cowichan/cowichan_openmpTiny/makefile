@@ -11,7 +11,10 @@ cowichan_openmp:	cowichan.o
 cowichan.o: ../cowichan/cowichan.cpp
 	g++ -Wall -m64  -fgnu-tm -fopenmp $(DATA) -D LIN64 -O2 -c ../cowichan/cowichan.cpp
 
-clean:	
+clean:
+	rm *.o
+
+clean_all:	
 	rm *.o *.txt *.png
 
 gnu:
@@ -38,7 +41,7 @@ gnu:
 outer:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp outer >> outerOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -48,7 +51,7 @@ outer:
 norm:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp norm >> normOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -58,7 +61,7 @@ norm:
 vecdiff:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp vecdiff >> vecdiffOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -69,7 +72,7 @@ vecdiff:
 sor:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp sor >> sorOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -78,7 +81,7 @@ sor:
 hull:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp hull >> hullOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -89,7 +92,7 @@ hull:
 thresh:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp thresh >> threshOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -99,7 +102,7 @@ thresh:
 all:
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp outer >> outerOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -108,7 +111,7 @@ all:
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp norm >> normOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -117,7 +120,7 @@ all:
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp vecdiff >> vecdiffOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -126,7 +129,7 @@ all:
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp sor >> sorOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -134,7 +137,7 @@ all:
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp hull >> hullOut$(DATA)$$t.txt ; \
         done ; \
     done ;
@@ -143,7 +146,7 @@ all:
 
 	for t in 2 4 8 16 32 64 ; do \
         #n=1 ; while [ $${n} -le 5 ] ; do \
-		for n in $$(seq 1 5) ; do \
+		for n in $$(seq 1 30) ; do \
 			OMP_NUM_THREADS=$$t ./cowichan_openmp thresh >> threshOut$(DATA)$$t.txt ; \
         done ; \
     done ;
